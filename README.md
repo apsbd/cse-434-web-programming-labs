@@ -1,208 +1,212 @@
-### Class 5: Introduction to PHP and MySQL
+### Class 6: Node.js and Express.js
 
-#### **Class Outline**
+#### Class Objectives:
+1. Understand the fundamentals of Node.js and its event-driven architecture.
+2. Learn how to use Node Package Manager (NPM) to manage dependencies.
+3. Explore modules in Node.js for organizing code.
+4. Build a RESTful API using Express.js.
 
-**Objectives:**
-1. Introduce server-side programming with PHP.
-2. Cover basics of MySQL and database management.
-3. Build a simple dynamic website that interacts with a MySQL database.
-
-#### **Topics and Examples**
-
----
-
-### 1. **Introduction to PHP**
-   - **What is PHP?**
-     - Server-side scripting language for web development.
-     - Executes on the server, generating HTML for the client.
-
-   - **PHP Syntax and Basic Structure**
-     ```php
-     <?php
-     echo "Hello, World!";
-     ?>
-     ```
-   - **Variables and Data Types**
-     ```php
-     <?php
-     $name = "Mohiuddin";
-     $age = 25;
-     echo "Name: $name, Age: $age";
-     ?>
-     ```
-
-   - **Basic PHP Functions**
-     ```php
-     <?php
-     function greet($name) {
-         return "Hello, $name!";
-     }
-     echo greet("Mohiuddin");
-     ?>
-     ```
+#### Prerequisites:
+- Familiarity with JavaScript basics, including ES6 syntax.
+- Understanding of HTTP and basic server-client communication.
 
 ---
 
-### 2. **PHP and HTML Integration**
-   - **Embedding PHP in HTML**
-     ```html
-     <html>
-     <body>
-         <h1><?php echo "Welcome to PHP and MySQL Class!"; ?></h1>
-     </body>
-     </html>
-     ```
-   - **Form Handling in PHP**
-     - **Example: Simple Contact Form**
-       ```html
-       <form method="POST" action="process_form.php">
-           <label for="name">Name:</label>
-           <input type="text" id="name" name="name">
-           <input type="submit" value="Submit">
-       </form>
-       ```
-       - **process_form.php**
-         ```php
-         <?php
-         $name = $_POST['name'];
-         echo "Hello, $name!";
-         ?>
-         ```
+### Class Outline:
 
----
+1. **Introduction to Node.js**
+   - What is Node.js?
+   - Understanding the JavaScript runtime environment.
+   - Event-driven, non-blocking I/O model.
 
-### 3. **Introduction to MySQL**
-   - **What is MySQL?**
-     - Popular relational database management system.
-     - Often used with PHP for storing data.
+   **Answer:**
+   Node.js is a server-side platform that runs JavaScript code outside of a browser, built on Google Chrome's V8 engine. It allows JavaScript to be used for backend development.
 
-   - **Connecting PHP to MySQL**
-     ```php
-     <?php
-     $servername = "localhost";
-     $username = "root";
-     $password = "";
-     $dbname = "my_database";
+2. **Setting Up Node.js**
+   - Installing Node.js and NPM.
+   - Running `node -v` and `npm -v` to verify installation.
 
-     $conn = new mysqli($servername, $username, $password, $dbname);
+3. **Modules in Node.js**
+   - Built-in modules: `fs`, `http`, `path`.
+   - Creating and using custom modules.
 
-     if ($conn->connect_error) {
-         die("Connection failed: " . $conn->connect_error);
-     }
-     echo "Connected successfully";
-     ?>
-     ```
-
----
-
-### 4. **Basic SQL Commands**
-   - **Creating a Database**
-     ```sql
-     CREATE DATABASE my_database;
-     ```
-
-   - **Creating a Table**
-     ```sql
-     CREATE TABLE users (
-         id INT AUTO_INCREMENT PRIMARY KEY,
-         name VARCHAR(50),
-         email VARCHAR(50)
-     );
-     ```
-
-   - **Inserting Data into the Table**
-     ```php
-     <?php
-     $sql = "INSERT INTO users (name, email) VALUES ('Mohiuddin', 'mohi@example.com')";
-     if ($conn->query($sql) === TRUE) {
-         echo "New record created successfully";
-     } else {
-         echo "Error: " . $sql . "<br>" . $conn->error;
-     }
-     ?>
-     ```
-
-   - **Fetching Data from the Database**
-     ```php
-     <?php
-     $sql = "SELECT id, name, email FROM users";
-     $result = $conn->query($sql);
-
-     if ($result->num_rows > 0) {
-         while($row = $result->fetch_assoc()) {
-             echo "id: " . $row["id"]. " - Name: " . $row["name"]. " - Email: " . $row["email"]. "<br>";
-         }
-     } else {
-         echo "0 results";
-     }
-     ?>
-     ```
-
----
-
-### 5. **Lab Exercise: Creating a Dynamic Website with PHP and MySQL**
-
-**Objective:** Build a simple website that allows users to register and view user data.
-
-**Step-by-Step Guide:**
-1. **Create a Database** called `web_lab`.
-   ```sql
-   CREATE DATABASE web_lab;
-   ```
-
-2. **Create a Table** `users`.
-   ```sql
-   CREATE TABLE users (
-       id INT AUTO_INCREMENT PRIMARY KEY,
-       name VARCHAR(50),
-       email VARCHAR(50),
-       password VARCHAR(50)
-   );
-   ```
-
-3. **Registration Form** in `register.php`.
-   ```html
-   <form method="POST" action="save_user.php">
-       <label>Name:</label>
-       <input type="text" name="name">
-       <label>Email:</label>
-       <input type="email" name="email">
-       <label>Password:</label>
-       <input type="password" name="password">
-       <input type="submit" value="Register">
-   </form>
-   ```
-
-4. **Save User Data** in `save_user.php`.
-   ```php
-   <?php
-   $conn = new mysqli("localhost", "root", "", "web_lab");
-   $name = $_POST['name'];
-   $email = $_POST['email'];
-   $password = $_POST['password'];
-
-   $sql = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$password')";
-   if ($conn->query($sql) === TRUE) {
-       echo "Registration successful!";
-   } else {
-       echo "Error: " . $sql . "<br>" . $conn->error;
+   **Example**:
+   ```javascript
+   // math.js (Custom Module)
+   function add(a, b) {
+       return a + b;
    }
-   ?>
+
+   module.exports = { add };
+
+   // main.js (Importing the Module)
+    const math = require('./math');
+    console.log('Answer is: ', math.add(5, 3)); // Output: 8
    ```
 
-5. **Display Users** in `view_users.php`.
-   ```php
-   <?php
-   $conn = new mysqli("localhost", "root", "", "web_lab");
-   $sql = "SELECT id, name, email FROM users";
-   $result = $conn->query($sql);
+4. **Creating a Basic HTTP Server in Node.js**
+   - Using the `http` module to create a simple server.
+   - Handling requests and responses.
 
-   if ($result->num_rows > 0) {
-       while($row = $result->fetch_assoc()) {
-           echo "ID: " . $row["id"]. " - Name: " . $row["name"]. " - Email: " . $row["email"]. "<br>";
-       }
-   } else {
-       echo "No users found";
-   }
-   ?>
+   **Example**:
+   ```javascript
+   const http = require('http');
+
+   const server = http.createServer((req, res) => {
+       res.statusCode = 200;
+       res.setHeader('Content-Type', 'text/plain');
+       res.end('Hello, World!');
+   });
+
+   server.listen(3000, () => {
+       console.log('Server running at http://localhost:3000/');
+   });
+   ```
+
+   **Answer:**
+   This server listens on port 3000 and responds with "Hello, World!" when accessed.
+
+5. **Introduction to Express.js**
+   - What is Express.js?
+     **Answer:**
+     Express.js is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
+   - Benefits of using Express over the native `http` module.
+
+6. **Setting Up an Express Server (20 mins)**
+   - Installing Express: `npm install express`
+   - Basic server setup with Express.
+
+   **Example**:
+   ```javascript
+   const express = require('express');
+   const app = express();
+
+   app.get('/', (req, res) => {
+       res.send('Hello, Express!');
+   });
+
+   app.listen(3000, () => {
+       console.log('Express server running on http://localhost:3000');
+   });
+   ```
+
+   **Answer:**
+   This Express server listens on port 3000 and responds with "Hello, Express!" when accessed.
+
+7. **Building RESTful APIs with Express**
+   - Understanding RESTful concepts: GET, POST, PUT, DELETE.
+   - Creating routes and handling requests.
+   - Example: Building a simple API for managing a list of items.
+
+   **Code Example**:
+   ```javascript
+   const express = require('express');
+   const app = express();
+
+   // Middleware to parse JSON
+   app.use(express.json());
+
+   let items = [
+       { id: 1, name: 'Item 1' },
+       { id: 2, name: 'Item 2' },
+   ];
+
+   // GET: Fetch all items
+   app.get('/api/items', (req, res) => {
+       res.json(items);
+   });
+
+   // POST: Add a new item
+   app.post('/api/items', (req, res) => {
+       const newItem = {
+           id: items.length + 1,
+           name: req.body.name,
+       };
+       items.push(newItem);
+       res.status(201).json(newItem);
+   });
+
+   // PUT: Update an item by ID
+   app.put('/api/items/:id', (req, res) => {
+       const item = items.find(i => i.id === parseInt(req.params.id));
+       if (!item) return res.status(404).send('Item not found');
+
+       item.name = req.body.name;
+       res.json(item);
+   });
+
+   // DELETE: Remove an item by ID
+   app.delete('/api/items/:id', (req, res) => {
+       const itemIndex = items.findIndex(i => i.id === parseInt(req.params.id));
+       if (itemIndex === -1) return res.status(404).send('Item not found');
+
+       items.splice(itemIndex, 1);
+       res.status(204).send();
+   });
+
+   app.listen(3000, () => {
+       console.log('API server running on http://localhost:3000');
+   });
+   ```
+
+   **Explanation**:
+   - **GET `/api/items`**: Fetches all items in the list.
+   - **POST `/api/items`**: Adds a new item to the list. The item data is sent in the request body.
+   - **PUT `/api/items/:id`**: Updates an existing item by ID.
+   - **DELETE `/api/items/:id`**: Deletes an item from the list by ID.
+
+### Lab Exercise:
+
+**Objective**: Build a small REST API with Express that manages a list of books.
+
+1. **Setup**:
+   - Initialize a new Node.js project with `npm init -y`.
+   - Install Express: `npm install express`.
+
+2. **API Requirements**:
+   - Create endpoints to `GET`, `POST`, `PUT`, and `DELETE` books.
+   - Each book should have an `id`, `title`, and `author`.
+
+3. **Code**:
+   ```javascript
+   const express = require('express');
+   const app = express();
+   app.use(express.json());
+
+   let books = [];
+
+   // GET: List all books
+   app.get('/api/books', (req, res) => res.json(books));
+
+   // POST: Add a new book
+   app.post('/api/books', (req, res) => {
+       const newBook = {
+           id: books.length + 1,
+           title: req.body.title,
+           author: req.body.author,
+       };
+       books.push(newBook);
+       res.status(201).json(newBook);
+   });
+
+   // PUT: Update a book by ID
+   app.put('/api/books/:id', (req, res) => {
+       const book = books.find(b => b.id === parseInt(req.params.id));
+       if (!book) return res.status(404).send('Book not found');
+
+       book.title = req.body.title;
+       book.author = req.body.author;
+       res.json(book);
+   });
+
+   // DELETE: Delete a book by ID
+   app.delete('/api/books/:id', (req, res) => {
+       const bookIndex = books.findIndex(b => b.id === parseInt(req.params.id));
+       if (bookIndex === -1) return res.status(404).send('Book not found');
+
+       books.splice(bookIndex, 1);
+       res.status(204).send();
+   });
+
+   app.listen(3000, () => console.log('Server running on http://localhost:3000'));
    ```
