@@ -1,212 +1,180 @@
-### Class 6: Node.js and Express.js
-
-#### Class Objectives:
-1. Understand the fundamentals of Node.js and its event-driven architecture.
-2. Learn how to use Node Package Manager (NPM) to manage dependencies.
-3. Explore modules in Node.js for organizing code.
-4. Build a RESTful API using Express.js.
-
-#### Prerequisites:
-- Familiarity with JavaScript basics, including ES6 syntax.
-- Understanding of HTTP and basic server-client communication.
+### Class 7: Front-End Frameworks - React
+**Objective:** Introduce students to React fundamentals, building components, managing state, and creating an interactive SPA.
 
 ---
 
-### Class Outline:
+#### **1. Introduction to React**
+**Goal:** Understand the basics of React, including its architecture, components, props, state, and lifecycle methods.
 
-1. **Introduction to Node.js**
-   - What is Node.js?
-   - Understanding the JavaScript runtime environment.
-   - Event-driven, non-blocking I/O model.
+**Topics:**
+- **What is React?**
+  React is a JavaScript library for building user interfaces. It allows developers to create reusable UI components and efficiently update the DOM.
+  **Example:** Facebook and Instagram interfaces are built using React.
 
-   **Answer:**
-   Node.js is a server-side platform that runs JavaScript code outside of a browser, built on Google Chrome's V8 engine. It allows JavaScript to be used for backend development.
+- **React Core Concepts:**
+  1. **Components:** Reusable building blocks of React apps.
+     **Example:**
+     ```jsx
+     function Welcome(props) {
+       return <h1>Hello, {props.name}!</h1>;
+     }
+     ```
+  2. **Props (Properties):** Read-only inputs passed to components.
+     **Example:**
+     ```jsx
+     <Welcome name="Mohiuddin" />
+     ```
+  3. **State:** Internal data storage for components that can change over time.
+     **Example:**
+     ```jsx
+     class Counter extends React.Component {
+       constructor(props) {
+         super(props);
+         this.state = { count: 0 };
+       }
+       increment = () => this.setState({ count: this.state.count + 1 });
+       render() {
+         return <button onClick={this.increment}>{this.state.count}</button>;
+       }
+     }
+     ```
+  4. **Lifecycle Methods:** Functions triggered during a component's lifecycle (mounting, updating, unmounting).
+     **Example:** `componentDidMount` is used to fetch data after a component loads.
 
-2. **Setting Up Node.js**
-   - Installing Node.js and NPM.
-   - Running `node -v` and `npm -v` to verify installation.
+---
 
-3. **Modules in Node.js**
-   - Built-in modules: `fs`, `http`, `path`.
-   - Creating and using custom modules.
+#### **2. Building Interactive UIs with React**
+**Goal:** Learn how React handles interactivity using state and events.
 
-   **Example**:
-   ```javascript
-   // math.js (Custom Module)
-   function add(a, b) {
-       return a + b;
-   }
+**Topics:**
+- **Handling Events in React:**
+  React events are named using camelCase and are passed as functions.
+  **Example:**
+  ```jsx
+  function handleClick() {
+    alert('Button clicked!');
+  }
+  <button onClick={handleClick}>Click Me</button>
+  ```
 
-   module.exports = { add };
+- **Conditional Rendering:**
+  Render elements based on conditions.
+  **Example:**
+  ```jsx
+  function Greeting(props) {
+    if (props.isLoggedIn) {
+      return <h1>Welcome Back!</h1>;
+    } else {
+      return <h1>Please Sign Up.</h1>;
+    }
+  }
+  ```
 
-   // main.js (Importing the Module)
-    const math = require('./math');
-    console.log('Answer is: ', math.add(5, 3)); // Output: 8
-   ```
+- **Lists and Keys:**
+  Rendering dynamic lists with unique keys.
+  **Example:**
+  ```jsx
+  const numbers = [1, 2, 3, 4];
+  const listItems = numbers.map((num) => <li key={num}>{num}</li>);
+  return <ul>{listItems}</ul>;
+  ```
 
-4. **Creating a Basic HTTP Server in Node.js**
-   - Using the `http` module to create a simple server.
-   - Handling requests and responses.
+---
 
-   **Example**:
-   ```javascript
-   const http = require('http');
+#### **3. Lab: Creating a Single Page Application (SPA) with React**
+**Goal:** Apply knowledge to create a basic SPA with routing and interactivity.
 
-   const server = http.createServer((req, res) => {
-       res.statusCode = 200;
-       res.setHeader('Content-Type', 'text/plain');
-       res.end('Hello, World!');
-   });
+**Steps:**
+1. **Setup:**
+   - Install `create-react-app`:
+     ```bash
+     npx create-react-app my-spa
+     cd my-spa
+     npm start
+     ```
 
-   server.listen(3000, () => {
-       console.log('Server running at http://localhost:3000/');
-   });
-   ```
+2. **Create a Basic App Layout:**
+   - Create components:
+     - `Header.js`: Displays the title.
+     - `Footer.js`: Displays the footer text.
+     - `Home.js`, `About.js`: Content pages.
 
-   **Answer:**
-   This server listens on port 3000 and responds with "Hello, World!" when accessed.
+     **Example for `Header.js`:**
+     ```jsx
+     function Header() {
+       return <header><h1>My SPA</h1></header>;
+     }
+     ```
 
-5. **Introduction to Express.js**
-   - What is Express.js?
-     **Answer:**
-     Express.js is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
-   - Benefits of using Express over the native `http` module.
+3. **Add React Router for Navigation:**
+   - Install React Router:
+     ```bash
+     npm install react-router-dom
+     ```
+   - Setup routes in `App.js`:
+     ```jsx
+     import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+     import Home from './Home';
+     import About from './About';
 
-6. **Setting Up an Express Server (20 mins)**
-   - Installing Express: `npm install express`
-   - Basic server setup with Express.
+     function App() {
+       return (
+         <Router>
+           <nav>
+             <Link to="/">Home</Link>
+             <Link to="/about">About</Link>
+           </nav>
+           <Routes>
+             <Route path="/" element={<Home />} />
+             <Route path="/about" element={<About />} />
+           </Routes>
+         </Router>
+       );
+     }
+     ```
 
-   **Example**:
-   ```javascript
-   const express = require('express');
-   const app = express();
+4. **Add State and Interactivity:**
+   - Example: Counter in `Home.js`
+     ```jsx
+     import { useState } from 'react';
 
-   app.get('/', (req, res) => {
-       res.send('Hello, Express!');
-   });
+     function Home() {
+       const [count, setCount] = useState(0);
+       return (
+         <div>
+           <h2>Welcome to Home</h2>
+           <button onClick={() => setCount(count + 1)}>Count: {count}</button>
+         </div>
+       );
+     }
+     ```
 
-   app.listen(3000, () => {
-       console.log('Express server running on http://localhost:3000');
-   });
-   ```
+5. **Styling with CSS Modules:**
+   - Example: `Home.module.css`
+     ```css
+     .button {
+       background-color: blue;
+       color: white;
+       padding: 10px;
+     }
+     ```
 
-   **Answer:**
-   This Express server listens on port 3000 and responds with "Hello, Express!" when accessed.
+   - Import and use in `Home.js`:
+     ```jsx
+     import styles from './Home.module.css';
+     <button className={styles.button}>Styled Button</button>
+     ```
 
-7. **Building RESTful APIs with Express**
-   - Understanding RESTful concepts: GET, POST, PUT, DELETE.
-   - Creating routes and handling requests.
-   - Example: Building a simple API for managing a list of items.
+6. **Final Touches and Testing:**
+   - Test navigation and functionality.
+   - Add error handling or a 404 page.
 
-   **Code Example**:
-   ```javascript
-   const express = require('express');
-   const app = express();
+---
 
-   // Middleware to parse JSON
-   app.use(express.json());
+**Homework:**
+1. Expand the SPA with a "Contact" page.
+2. Use an external API (e.g., fetch and display data from [JSONPlaceholder](https://jsonplaceholder.typicode.com/)).
 
-   let items = [
-       { id: 1, name: 'Item 1' },
-       { id: 2, name: 'Item 2' },
-   ];
-
-   // GET: Fetch all items
-   app.get('/api/items', (req, res) => {
-       res.json(items);
-   });
-
-   // POST: Add a new item
-   app.post('/api/items', (req, res) => {
-       const newItem = {
-           id: items.length + 1,
-           name: req.body.name,
-       };
-       items.push(newItem);
-       res.status(201).json(newItem);
-   });
-
-   // PUT: Update an item by ID
-   app.put('/api/items/:id', (req, res) => {
-       const item = items.find(i => i.id === parseInt(req.params.id));
-       if (!item) return res.status(404).send('Item not found');
-
-       item.name = req.body.name;
-       res.json(item);
-   });
-
-   // DELETE: Remove an item by ID
-   app.delete('/api/items/:id', (req, res) => {
-       const itemIndex = items.findIndex(i => i.id === parseInt(req.params.id));
-       if (itemIndex === -1) return res.status(404).send('Item not found');
-
-       items.splice(itemIndex, 1);
-       res.status(204).send();
-   });
-
-   app.listen(3000, () => {
-       console.log('API server running on http://localhost:3000');
-   });
-   ```
-
-   **Explanation**:
-   - **GET `/api/items`**: Fetches all items in the list.
-   - **POST `/api/items`**: Adds a new item to the list. The item data is sent in the request body.
-   - **PUT `/api/items/:id`**: Updates an existing item by ID.
-   - **DELETE `/api/items/:id`**: Deletes an item from the list by ID.
-
-### Lab Exercise:
-
-**Objective**: Build a small REST API with Express that manages a list of books.
-
-1. **Setup**:
-   - Initialize a new Node.js project with `npm init -y`.
-   - Install Express: `npm install express`.
-
-2. **API Requirements**:
-   - Create endpoints to `GET`, `POST`, `PUT`, and `DELETE` books.
-   - Each book should have an `id`, `title`, and `author`.
-
-3. **Code**:
-   ```javascript
-   const express = require('express');
-   const app = express();
-   app.use(express.json());
-
-   let books = [];
-
-   // GET: List all books
-   app.get('/api/books', (req, res) => res.json(books));
-
-   // POST: Add a new book
-   app.post('/api/books', (req, res) => {
-       const newBook = {
-           id: books.length + 1,
-           title: req.body.title,
-           author: req.body.author,
-       };
-       books.push(newBook);
-       res.status(201).json(newBook);
-   });
-
-   // PUT: Update a book by ID
-   app.put('/api/books/:id', (req, res) => {
-       const book = books.find(b => b.id === parseInt(req.params.id));
-       if (!book) return res.status(404).send('Book not found');
-
-       book.title = req.body.title;
-       book.author = req.body.author;
-       res.json(book);
-   });
-
-   // DELETE: Delete a book by ID
-   app.delete('/api/books/:id', (req, res) => {
-       const bookIndex = books.findIndex(b => b.id === parseInt(req.params.id));
-       if (bookIndex === -1) return res.status(404).send('Book not found');
-
-       books.splice(bookIndex, 1);
-       res.status(204).send();
-   });
-
-   app.listen(3000, () => console.log('Server running on http://localhost:3000'));
-   ```
+**Deliverables:**
+- Fully functional SPA repository (submitted via Git).
+- Code review in the next class.
