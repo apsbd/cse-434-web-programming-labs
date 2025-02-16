@@ -195,10 +195,6 @@ Frameworks like **Bootstrap and Tailwind CSS** make responsive design easier.
 
 ---
 
-Would you like an interactive **codepen demo** or further **examples**? 🚀
-
----
-
 ## **6. Lab Activity: Build a Responsive Web Page**
 ### **Objective:**
 📌 Create a **fully responsive** webpage using **HTML, CSS, and Bootstrap/Tailwind**.
