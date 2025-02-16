@@ -94,22 +94,71 @@ footer {
     width: 100%;
 }
 
-/* Responsive Design */
+/* ============================= */
+/*        RESPONSIVE DESIGN      */
+/* ============================= */
+
+/* Small Screens (Phones) */
 @media (max-width: 768px) {
-    main {
+    /* Center Header Text */
+    header h1 {
+        font-size: 20px;
+    }
+
+    /* Stack Navigation Links Vertically */
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    /* Stack Article and Sidebar */
+    section {
         flex-direction: column;
     }
 
     article {
+        flex: 1;
         margin-right: 0;
         margin-bottom: 20px;
     }
 
-    nav ul {
+    aside {
+        flex: 1;
+    }
+}
+
+/* Medium Screens (Tablets) */
+@media (max-width: 992px) {
+    section {
         flex-direction: column;
     }
 
-    nav ul li {
-        margin: 10px 0;
+    article {
+        flex: 1;
+        margin-right: 0;
+    }
+
+    aside {
+        flex: 1;
+    }
+}
+
+/* Large Screens (Desktops) */
+@media (min-width: 1200px) {
+    section {
+        display: flex;
+        flex-direction: row;
+    }
+
+    article {
+        flex: 3;
+    }
+
+    aside {
+        flex: 1;
     }
 }
